@@ -1,7 +1,4 @@
-#!/usr/bin/ruby
-
 require 'rubygems'
-gem 'google-api-client', '>0.7'
 require 'google/api_client'
 require 'sinatra'
 
@@ -41,9 +38,9 @@ def query_in_youtube query_string
 end
 
 get '/query' do
-  result = query_in_youtube params[:text]
-  videoId = result.id.videoId
-  title = result.snippet.title
+  video = query_in_youtube params[:text]
+  videoId = video.id.videoId
+  title = video.snippet.title
 
   "<https://youtu.be/#{videoId}|#{title}>"
 end
