@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'google/api_client'
+require 'rest-client'
 require 'sinatra'
 
 DEVELOPER_KEY = ENV['GOOGLE_API_KEY']
@@ -38,9 +39,15 @@ def query_in_youtube query_string
 end
 
 get '/query' do
+  response_url = params[:response_url]
   video = query_in_youtube params[:text]
   videoId = video.id.videoId
   title = video.snippet.title
 
-  "<https://youtu.be/#{videoId}|#{title}>"
+  text = "<https://youtu.be/#{videoId}|#{title}>"
+
+  response = RestClient.post response_url, {:text => text}
+
+  status 200
+  body ''
 end
