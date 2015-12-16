@@ -39,18 +39,18 @@ def query_in_youtube query_string
 end
 
 get '/query' do
-  response_url = params[:response_url]
-  video = query_in_youtube params[:text]
-  videoId = video.id.videoId
-  title = video.snippet.title
+  Thread.new {
+    puts 'Thread starts'
 
-  text = "<https://youtu.be/#{videoId}|#{title}>"
+    video = query_in_youtube params[:text]
+    videoId = video.id.videoId
+    title = video.snippet.title
 
-  response =
-    RestClient.post response_url,
+    text = "<https://youtu.be/#{videoId}|#{title}>"
+    RestClient.post params[:response_url],
       {:response_type => 'in_channel', :text => text}.to_json,
       :content_type => :json
+  }
 
-  status 200
-  body ''
+  "Querying..."
 end
