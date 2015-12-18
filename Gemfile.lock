@@ -84,6 +84,7 @@ PLATFORMS
 
 DEPENDENCIES
   google-api-client (> 0.7)
+  json
   puma
   rest-client
   sinatra

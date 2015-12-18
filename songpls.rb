@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'google/api_client'
 require 'rest-client'
+require 'json'
 require 'sinatra'
 
 DEVELOPER_KEY = ENV['GOOGLE_API_KEY']
@@ -52,5 +53,6 @@ get '/query' do
       :content_type => :json
   }
 
-  "Querying..."
+  content_type :json
+  {:response_type => 'in_channel', :text => 'Querying...'}.to_json
 end
